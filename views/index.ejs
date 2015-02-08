@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Kancolle Broker</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Login with your DMM account(email) & password below.</h1>
+    <form action="login" method="post">
+      <label for="login_id">Email</label>
+      <input type="email" name="login_id" id="login_id" />
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password"/>
+      <button type="submit">Login</button>
+    </form>
   </body>
 </html>
