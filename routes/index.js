@@ -15,7 +15,7 @@ router.post('/login', function(req, res) {
     var password = req.body.password + '';
     if (validator.isEmail(login_id)) {
         request('https://www.dmm.com/my/-/login/', function (error, response, body) {
-            if (!error && response.statusCode == 200) {
+            if (!error && response.statusCode === 200) {
                 var dmm_token = body.split(/DMM_TOKEN.*?"([a-z0-9]{32})"/)[1];
                 var post_data = body.split(/token.*?"([a-z0-9]{32})"/)[3];
             } else {
@@ -59,7 +59,7 @@ router.post('/login', function(req, res) {
                         method: 'POST',
                         form: login_formdata
                     }, function(error, response, logindata) {
-                        if (!error) {
+                        if (!error && response.statusCode === 302) {
                             var cookie = '';
                             response.headers['set-cookie'].forEach(function(cookieString) {
                                 cookie += cookieString.split(';')[0] + ';';
@@ -76,6 +76,12 @@ router.post('/login', function(req, res) {
                                     res.redirect(link);
                                 }
                             });
+                        } else if (response.statusCode === 200) {
+                            // login failed
+                            return res.send(403, 'Login failed.');
+                        } else {
+                            console.log(error);
+                            return res.send(500, 'Internal Server Error.');
                         }
                     });
                 }
