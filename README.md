@@ -5,6 +5,8 @@ VPN server is forbidden in Japan and may have serious security problems. Kancoll
 
 Deploy the app on a Japan server, and login from it's webpage to get the direct game link.
 
+Demo: https://kancolle.phoenixlzx.com
+
 **ATTENTION**
 
 This application does not need database, and will NOT store any account data. You could setup one but remember not to do anything bad.
