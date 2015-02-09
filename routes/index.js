@@ -88,6 +88,8 @@ router.post('/login', function(req, res) {
             });
 
         });
+    } else {
+        res.send(400, 'Bad request.');
     }
 });
 
