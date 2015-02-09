@@ -1,7 +1,7 @@
 Kancolle-broker
 ===============
 
-VPN server is forbidden in Japan and may have serious security problems. Kancolle-broker is the app to play DMM's kantai collection without having a proxy server.
+VPN server is forbidden in Japan and may have serious security problems. Kancolle-broker is the app to play DMM's kantai collection without having a proxy server - You are connecting to DMM's server directly.
 
 Deploy the app on a Japan server, and login from it's webpage to get the direct game link.
 
