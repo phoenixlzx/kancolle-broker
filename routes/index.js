@@ -5,11 +5,11 @@ var validator = require('validator');
 var request = require('request');
 var cheerio = require('cheerio');
 
-router.get('/', function(req, res) {
+router.get('/poi', function(req, res) {
     res.render('index');
 });
 
-router.post('/login', function(req, res) {
+router.post('/poi/login', function(req, res) {
     // security check
     var login_id = req.body.login_id + '';
     var password = req.body.password + '';
