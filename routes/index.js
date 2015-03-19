@@ -13,9 +13,9 @@ router.post('/poi/login', function(req, res) {
     // security check
     var login_id = req.body.login_id + '';
     var password = req.body.password + '';
-    var rcookie = req.body.cookie + '';
+    var rcookie = req.body.cookie;
     if (rcookie != '' && rcookie != null){
-      cosole.log("with cookie");
+      console.log("with cookie"+ rcookie);
       request({
         url: 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/',
         headers: {
@@ -26,22 +26,22 @@ router.post('/poi/login', function(req, res) {
           $ = cheerio.load(htmlbody);
           var link = $('iframe#game_frame').attr('src');
           // res.redirect(link);
-          res.json({
-            cookie: rcookie,
-            url: link
-          })
+          if(link){
+            res.json({
+              cookie: rcookie,
+              url: link
+            })
+          }else{
+            console.log("url undefined");
+            return res.send(500, 'Internal Server Error.');
+          } 
         } else {
           console.log(error);
           return res.send(500, 'Internal Server Error.');
         }
       });
     } else if (validator.isEmail(login_id)) {
-        cosole.log("without cookie");
-        res.json({
-          cookie: 1,
-          url: 1
-        })
-        return;
+        console.log("without cookie");
         request('https://www.dmm.com/my/-/login/', function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var dmm_token = body.split(/DMM_TOKEN.*?"([a-z0-9]{32})"/)[1];
