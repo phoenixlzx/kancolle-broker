@@ -50,7 +50,7 @@
         if(cookie){
           $.ajax({
             type: "POST",
-            url: "poi/login",
+            url: "login",
             data: {
               cookie: cookie
             },
@@ -78,7 +78,7 @@
         remember = $("#remember").prop('checked') && lsSupported;
         $.ajax({
           type: "POST",
-          url: "poi/login",
+          url: "login",
           data: data,
           success:function (res) {
             if(remember){
