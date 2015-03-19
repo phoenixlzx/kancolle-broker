@@ -2,17 +2,96 @@
 <html>
   <head>
     <title>Kancolle Broker</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css' />
+    <style>
+    .centered-form{
+      margin: 100px auto;
+      width:300px;
+    }
+    h1{
+      text-align: center;
+    }
+    footer{
+      position: absolute;
+      right:10px;bottom:10px;
+    }
+    iframe{
+      height: 100%;
+      width: 100%;
+    }
+    </style>
   </head>
   <body>
-    <h1>Login with your DMM account(email) & password below. <small><a
-                href="https://github.com/phoenixlzx/kancolle-broker">View source code</a></small></h1>
-    <form action="login" method="post">
-      <label for="login_id">Email</label>
-      <input type="email" name="login_id" id="login_id" />
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password"/>
-      <button type="submit">Login</button>
+    <form class="centered-form pure-form pure-form-stacked" action="login">
+      <h1>Poi Poi Poi</h1>
+      <fieldset class="pure-group">
+        <input class=" pure-input-1" type="email" placeholder="Email" name="login_id" id="login_id">
+        <input class=" pure-input-1" type="password" placeholder="Password" name="password" id="password">
+      </fieldset>
+      <fieldset>
+        <label for="remember" class="pure-checkbox hidden" id="remember-box">
+          <input id="remember" type="checkbox"> Remember me
+        </label>
+        <button type="submit" class="pure-button pure-button-primary pure-input-1">Sign in</button>
+      </fieldset>
     </form>
+    <footer><a href="https://github.com/phoenixlzx/kancolle-broker">kancolle-broker</a></footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
+    <script>
+    (function(){
+      function loadIframe(url){
+
+      }
+
+      lsSupported = "localStorage" in window;
+      if(lsSupported){
+        $("#remember-box").removeClass("hidden");
+        cookie = window.localStorage.getItem('cookie');
+        if(cookie){
+          $.ajax({
+            type: "POST",
+            url: "poi/login",
+            data: {
+              cookie: cookie
+            },
+            success:function (res) {
+              loadIframe(res.url);
+            },
+            error:function(type){
+              alert("Login Failed.");
+              $(e.target).prop('checked', true);
+            }
+          })
+        }
+        $("#remember").on("change", function(e){
+          checked = $(e.target).prop('checked');
+          if(!checked){
+            window.localStorage.clear();
+          }
+        })
+      }
+      $("form").on("submit", function (e) {
+        e.preventDefault();
+        uname = $("#login_id").val();
+        pass = $("#password").val();
+        data = $('form').serialize();
+        remember = $("#remember").prop('checked') && lsSupported;
+        $.ajax({
+          type: "POST",
+          url: "poi/login",
+          data: data,
+          success:function (res) {
+            if(remember){
+              window.localStorage.setItem('cookie', res.cookie);
+            }
+            loadIframe(res.url);
+          },
+          error:function(type){
+            console.log(type);
+          }
+        })
+      })
+    })();
+    </script>
   </body>
 </html>

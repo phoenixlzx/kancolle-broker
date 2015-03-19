@@ -13,7 +13,35 @@ router.post('/poi/login', function(req, res) {
     // security check
     var login_id = req.body.login_id + '';
     var password = req.body.password + '';
-    if (validator.isEmail(login_id)) {
+    var rcookie = req.body.cookie + '';
+    if (rcookie != '' && rcookie != null){
+      cosole.log("with cookie");
+      request({
+        url: 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/',
+        headers: {
+          'Cookie': rcookie
+        }
+      }, function (error, response, htmlbody) {
+        if (!error) {
+          $ = cheerio.load(htmlbody);
+          var link = $('iframe#game_frame').attr('src');
+          // res.redirect(link);
+          res.json({
+            cookie: rcookie,
+            url: link
+          })
+        } else {
+          console.log(error);
+          return res.send(500, 'Internal Server Error.');
+        }
+      });
+    } else if (validator.isEmail(login_id)) {
+        cosole.log("without cookie");
+        res.json({
+          cookie: 1,
+          url: 1
+        })
+        return;
         request('https://www.dmm.com/my/-/login/', function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var dmm_token = body.split(/DMM_TOKEN.*?"([a-z0-9]{32})"/)[1];
@@ -73,7 +101,14 @@ router.post('/poi/login', function(req, res) {
                                 if (!error) {
                                     $ = cheerio.load(htmlbody);
                                     var link = $('iframe#game_frame').attr('src');
-                                    res.redirect(link);
+                                    // res.redirect(link);
+                                    res.json({
+                                      cookie: cookie,
+                                      url: link
+                                    })
+                                } else {
+                                  console.log(error);
+                                  return res.send(500, 'Internal Server Error.');
                                 }
                             });
                         } else if (response.statusCode === 200) {

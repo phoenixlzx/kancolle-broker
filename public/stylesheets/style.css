@@ -1,6 +1,23 @@
+html{
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: table;
+  width: 100%;
+}
 body {
-  padding: 50px;
+  display: table-cell;
+  vertical-align: middle;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+form{
+  display: inline-block;
+  text-align: center;
+}
+form label,
+form input{
+  display: block;
 }
 
 a {
