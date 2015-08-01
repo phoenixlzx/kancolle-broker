@@ -35,12 +35,19 @@
         <button type="submit" class="pure-button pure-button-primary pure-input-1">Sign in</button>
       </fieldset>
     </form>
+    <iframe name="game_frame" width="900" height="1200" id="game_frame" src="about:blank" class="hidden" border="0" frameborder="0" scrolling="no" style="height: 610px;">艦隊これくしょん～艦これ～</iframe>
     <footer><a href="https://github.com/phoenixlzx/kancolle-broker">kancolle-broker</a></footer>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
     (function(){
       function loadIframe(url){
-	window.location.replace(url);
+	if(location.href.indexOf('re')!=-1){
+	  window.location.replace(url);
+	}else{
+	  $("iframe").removeClass("hidden").attr("src", url);
+          $("form").hide();
+          $("footer").hide();o
+	}
       }
 
       lsSupported = "localStorage" in window;
