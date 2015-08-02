@@ -70,10 +70,10 @@
               $(e.target).prop('checked', true);
             },
             beforeSend:function(){
-              $('fieldset').prop('disabled', true);
+              $(':input').prop('disabled', true);
             },
             complete:function(){
-              $('fieldset').prop('disabled', false);
+              $(':input').prop('disabled', false);
             }
           })
         }
@@ -105,10 +105,10 @@
             console.log(type);
           },
           beforeSend:function(){
-	    $('fieldset').prop('disabled', true);
+	    $(':input').prop('disabled', true);
 	  },
 	  complete:function(){
-	    $('fieldset').prop('disabled', false);
+	    $(':input').prop('disabled', false);
 	  }
         })
       })
