@@ -15,15 +15,11 @@
       position: absolute;
       right:10px;bottom:10px;
     }
-    iframe{
-      height: 100%;
-      /*width: 100%;*/
-    }
     </style>
   </head>
   <body>
     <form class="centered-form pure-form pure-form-stacked" action="login">
-      <h1>Poi Poi Poi</h1>
+      <h1>Kancolle broker</h1>
       <fieldset class="pure-group">
         <input class=" pure-input-1" type="email" placeholder="Email" name="login_id" id="login_id">
         <input class=" pure-input-1" type="password" placeholder="Password" name="password" id="password">
@@ -36,18 +32,18 @@
       </fieldset>
     </form>
     <iframe name="game_frame" width="900" height="1200" id="game_frame" src="about:blank" class="hidden" border="0" frameborder="0" scrolling="no" style="height: 610px;">艦隊これくしょん～艦これ～</iframe>
-    <footer><a href="https://github.com/phoenixlzx/kancolle-broker">kancolle-broker</a></footer>
+    <footer><a href="https://github.com/phoenixlzx/kancolle-broker">github</a></footer>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
     (function(){
       function loadIframe(url){
-	if(location.href.indexOf('re')!=-1){
-	  window.location.replace(url);
-	}else{
-	  $("iframe").removeClass("hidden").attr("src", url);
+        if(location.href.indexOf('re')!=-1){
+          window.location.replace(url);
+        }else{
+          $("iframe").removeClass("hidden").attr("src", url);
           $("form").hide();
           $("footer").hide();
-	}
+        }
       }
 
       lsSupported = "localStorage" in window;
@@ -67,7 +63,7 @@
             },
             error:function(type){
               alert("Login Failed.");
-              $(e.target).prop('checked', true);
+              $("#remember").prop('checked', false);
             },
             beforeSend:function(){
               $(':input').prop('disabled', true);
@@ -86,7 +82,7 @@
       }
       $("form").on("submit", function (e) {
         e.preventDefault();
-        
+
         uname = $("#login_id").val();
         pass = $("#password").val();
         data = $('form').serialize();
@@ -105,11 +101,11 @@
             console.log(type);
           },
           beforeSend:function(){
-	    $(':input').prop('disabled', true);
-	  },
-	  complete:function(){
-	    $(':input').prop('disabled', false);
-	  }
+            $(':input').prop('disabled', true);
+          },
+          complete:function(){
+            $(':input').prop('disabled', false);
+          }
         })
       })
     })();
