@@ -68,6 +68,12 @@
             error:function(type){
               alert("Login Failed.");
               $(e.target).prop('checked', true);
+            },
+            beforeSend:function(){
+              $('fieldset').prop('disabled', true);
+            },
+            complete:function(){
+              $('fieldset').prop('disabled', false);
             }
           })
         }
@@ -80,6 +86,7 @@
       }
       $("form").on("submit", function (e) {
         e.preventDefault();
+        
         uname = $("#login_id").val();
         pass = $("#password").val();
         data = $('form').serialize();
@@ -96,7 +103,13 @@
           },
           error:function(type){
             console.log(type);
-          }
+          },
+          beforeSend:function(){
+	    $('fieldset').prop('disabled', true);
+	  },
+	  complete:function(){
+	    $('fieldset').prop('disabled', false);
+	  }
         })
       })
     })();
