@@ -55,6 +55,7 @@
         $("#remember-box").removeClass("hidden");
         cookie = window.localStorage.getItem('cookie');
         if(cookie){
+          $("#remember").prop('checked', true);
           $.ajax({
             type: "POST",
             url: "login",
