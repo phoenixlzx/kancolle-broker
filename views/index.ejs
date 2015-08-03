@@ -21,12 +21,20 @@
     <form class="centered-form pure-form pure-form-stacked" action="login">
       <h1>Kancolle broker</h1>
       <fieldset class="pure-group">
-        <input class=" pure-input-1" type="email" placeholder="Email" name="login_id" id="login_id">
-        <input class=" pure-input-1" type="password" placeholder="Password" name="password" id="password">
+        <input class="pure-input-1" type="email" placeholder="Email" name="login_id" id="login_id">
+        <input class="pure-input-1" type="password" placeholder="Password" name="password" id="password">
       </fieldset>
       <fieldset>
         <label for="remember" class="pure-checkbox hidden" id="remember-box">
           <input id="remember" type="checkbox"> Remember me
+        </label>
+      </fieldset>
+      <fieldset>
+        <label for="redirect" class="pure-radio">
+          <input id="redirect-i" type="radio" name="redirect" checked> Load in iframe (for KCV or 74EO)
+        </label><br>
+        <label for="redirect" class="pure-radio">
+          <input id="redirect-r" type="radio" name="redirect"> Redirect (For Chrome)
         </label>
         <button type="submit" class="pure-button pure-button-primary pure-input-1">Sign in</button>
       </fieldset>
@@ -37,7 +45,7 @@
     <script>
     (function(){
       function loadIframe(url){
-        if(location.href.indexOf('re')!=-1){
+        if($("#redirect-r").prop('checked')){
           window.location.replace(url);
         }else{
           $("iframe").removeClass("hidden").attr("src", url);
@@ -79,6 +87,20 @@
             window.localStorage.clear();
           }
         })
+
+        redirect = window.localStorage.getItem('redirect');
+        if(redirect == 'redirect'){
+          $("#redirect-r").prop('checked', true);
+        }else{
+          $("#redirect-i").prop('checked', true);
+        }
+
+        $("#redirect-i").on("change", function(){
+          window.localStorage.setItem('redirect','iframe');
+        })
+        $("#redirect-r").on("change", function(){
+          window.localStorage.setItem('redirect','redirect');
+        })
       }
       $("form").on("submit", function (e) {
         e.preventDefault();
@@ -109,6 +131,14 @@
         })
       })
     })();
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-21699184-2', 'auto');
+      ga('send', 'pageview');
     </script>
   </body>
 </html>
