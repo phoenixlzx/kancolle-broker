@@ -5,11 +5,11 @@ var validator = require('validator');
 var request = require('request');
 var cheerio = require('cheerio');
 
-router.get('/poi', function(req, res) {
+router.get('/', function(req, res) {
     res.render('index');
 });
 
-router.post('/poi/login', function(req, res) {
+router.post('/login', function(req, res) {
     // security check
     var login_id = req.body.login_id + '';
     var password = req.body.password + '';
@@ -34,7 +34,7 @@ router.post('/poi/login', function(req, res) {
           }else{
             console.log("url undefined");
             return res.send(500, 'Internal Server Error.');
-          } 
+          }
         } else {
           console.log(error);
           return res.send(500, 'Internal Server Error.');

@@ -2,7 +2,7 @@
 var debug = require('debug')('kancolle-broker');
 var app = require('../app');
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 80);
 
 var server = app.listen(app.get('port'), '127.0.0.1', function() {
   debug('Express server listening on port ' + server.address().port);
