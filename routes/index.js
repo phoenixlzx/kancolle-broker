@@ -15,7 +15,6 @@ router.post('/login', function(req, res) {
     var password = req.body.password + '';
     var rcookie = req.body.cookie;
     if (rcookie != '' && rcookie != null){
-      console.log("with cookie"+ rcookie);
       request({
         url: 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/',
         headers: {
@@ -25,7 +24,6 @@ router.post('/login', function(req, res) {
         if (!error) {
           $ = cheerio.load(htmlbody);
           var link = $('iframe#game_frame').attr('src');
-          // res.redirect(link);
           if(link){
             res.json({
               cookie: rcookie,
@@ -41,7 +39,6 @@ router.post('/login', function(req, res) {
         }
       });
     } else if (validator.isEmail(login_id)) {
-        console.log("without cookie");
         request('https://www.dmm.com/my/-/login/', function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var dmm_token = body.split(/DMM_TOKEN.*?"([a-z0-9]{32})"/)[1];
