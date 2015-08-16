@@ -28,10 +28,10 @@
         <label for="remember" class="pure-checkbox hidden" id="remember-box">
           <input id="remember" type="checkbox"> Remember me
         </label>
-        <label for="redirect" class="pure-radio">
+        <label for="redirect-i" class="pure-radio">
           <input id="redirect-i" type="radio" name="redirect" checked> Load in iframe (for KCV or 74EO)
         </label>
-        <label for="redirect" class="pure-radio">
+        <label for="redirect-r" class="pure-radio">
           <input id="redirect-r" type="radio" name="redirect"> Redirect (For Chrome)
         </label>
       </fieldset>
@@ -89,7 +89,7 @@
         })
 
         redirect = window.localStorage.getItem('redirect');
-        if(redirect == 'redirect'){
+        if(redirect == 'redirect' || /Chrome/.test(window.navigator.userAgent)){
           $("#redirect-r").prop('checked', true);
         }else{
           $("#redirect-i").prop('checked', true);
