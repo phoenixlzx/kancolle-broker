@@ -72,6 +72,7 @@
                         },
                         error:function(type){
                             alert("Login Failed.");
+                            console.log(type);
                             $("#remember").prop('checked', false);
                         },
                         beforeSend:function(){
@@ -121,7 +122,9 @@
                         loadIframe(res.url);
                     },
                     error:function(type){
+                        alert("Login Failed.");
                         console.log(type);
+                        $("#remember").prop('checked', false);
                     },
                     beforeSend:function(){
                         $(':input').prop('disabled', true);
