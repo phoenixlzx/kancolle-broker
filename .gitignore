@@ -1,7 +1,6 @@
 node_modules
 .idea
 .DS_Store
-app_config.json
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
