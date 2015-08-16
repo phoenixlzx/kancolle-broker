@@ -1,18 +1,140 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Kancolle Broker</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>Login with your DMM account(email) & password below. <small><a
-                href="https://github.com/phoenixlzx/kancolle-broker">View source code</a></small></h1>
-    <form action="login" method="post">
-      <label for="login_id">Email</label>
-      <input type="email" name="login_id" id="login_id" />
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password"/>
-      <button type="submit">Login</button>
+    <link rel='stylesheet' href='pure-0.6.0.min.css' />
+    <style>
+        .centered-form{
+            margin: 100px auto;
+            width:300px;
+        }
+        h1{
+            text-align: center;
+        }
+        footer{
+            position: absolute;
+            right:10px;bottom:10px;
+        }
+    </style>
+</head>
+<body>
+    <form class="centered-form pure-form pure-form-stacked" action="login">
+        <h1>Kancolle broker</h1>
+        <p style="color:gray">Login with your DMM account(email) &amp; password below.</p>
+        <fieldset class="pure-group">
+            <input class="pure-input-1" type="email" placeholder="DMM Account" name="login_id" id="login_id">
+            <input class="pure-input-1" type="password" placeholder="Password" name="password" id="password">
+        </fieldset>
+        <fieldset>
+            <label for="remember" class="pure-checkbox hidden" id="remember-box">
+                <input id="remember" type="checkbox"> Remember me
+            </label>
+            <label for="redirect-i" class="pure-radio">
+                <input id="redirect-i" type="radio" name="redirect" checked> Load in iframe (for KCV or 74EO)
+            </label>
+            <label for="redirect-r" class="pure-radio">
+                <input id="redirect-r" type="radio" name="redirect"> Redirect (for Chrome)
+            </label>
+        </fieldset>
+        <fieldset>
+            <button type="submit" class="pure-button pure-button-primary pure-input-1">Sign in</button>
+        </fieldset>
     </form>
-  </body>
+    <iframe name="game_frame" width="900" height="1200" id="game_frame" src="about:blank" class="hidden" border="0" frameborder="0" scrolling="no" style="height: 610px;">艦隊これくしょん～艦これ～</iframe>
+    <footer><a href="https://github.com/phoenixlzx/kancolle-broker">github</a></footer>
+    <script src="jquery-1.11.3.min.js"></script>
+    <script>
+        (function(){
+            function loadIframe(url){
+                if($("#redirect-r").prop('checked')){
+                    window.location.replace(url);
+                }else{
+                    $("iframe").removeClass("hidden").attr("src", url);
+                    $("form").hide();
+                    $("footer").hide();
+                }
+            }
+
+            lsSupported = "localStorage" in window;
+            if(lsSupported){
+                $("#remember-box").removeClass("hidden");
+                cookie = window.localStorage.getItem('cookie');
+                if(cookie){
+                    $("#remember").prop('checked', true);
+                    $.ajax({
+                        type: "POST",
+                        url: "login",
+                        data: {
+                            cookie: cookie
+                        },
+                        success:function (res) {
+                            loadIframe(res.url);
+                        },
+                        error:function(type){
+                            alert("Login Failed.");
+                            console.log(type);
+                            $("#remember").prop('checked', false);
+                        },
+                        beforeSend:function(){
+                            $(':input').prop('disabled', true);
+                        },
+                        complete:function(){
+                            $(':input').prop('disabled', false);
+                        }
+                    })
+                }
+                $("#remember").on("change", function(e){
+                    checked = $(e.target).prop('checked');
+                    if(!checked){
+                        window.localStorage.clear();
+                    }
+                })
+
+                redirect = window.localStorage.getItem('redirect');
+                if(redirect == 'redirect' || /Chrome/.test(window.navigator.userAgent)){
+                    $("#redirect-r").prop('checked', true);
+                }else{
+                    $("#redirect-i").prop('checked', true);
+                }
+
+                $("#redirect-i").on("change", function(){
+                    window.localStorage.setItem('redirect','iframe');
+                })
+                $("#redirect-r").on("change", function(){
+                    window.localStorage.setItem('redirect','redirect');
+                })
+            }
+            $("form").on("submit", function (e) {
+                e.preventDefault();
+
+                uname = $("#login_id").val();
+                pass = $("#password").val();
+                data = $('form').serialize();
+                remember = $("#remember").prop('checked') && lsSupported;
+                $.ajax({
+                    type: "POST",
+                    url: "login",
+                    data: data,
+                    success:function (res) {
+                        if(remember){
+                            window.localStorage.setItem('cookie', res.cookie);
+                        }
+                        loadIframe(res.url);
+                    },
+                    error:function(type){
+                        alert("Login Failed.");
+                        console.log(type);
+                        $("#remember").prop('checked', false);
+                    },
+                    beforeSend:function(){
+                        $(':input').prop('disabled', true);
+                    },
+                    complete:function(){
+                        $(':input').prop('disabled', false);
+                    }
+                })
+            })
+        })();
+    </script>
+</body>
 </html>
