@@ -15,7 +15,7 @@ router.post('/login', function(req, res) {
     var password = req.body.password + '';
     var rcookie = req.body.cookie;
     if (rcookie != '' && rcookie != null){
-        console.log("with cookie"+ rcookie);
+
         request({
             url: 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/',
             headers: {
