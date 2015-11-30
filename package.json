@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Play kantai collection without proxy",
   "author": "Phoenix Nemo <i@phoenixlzx.com>",
+  "contributors": [
+    "Shan Zhou <hyspace@gmail.com> (http://hyspace.io)"
+  ],
   "bin": {
     "kancolle-broker": "./bin/www"
   },
