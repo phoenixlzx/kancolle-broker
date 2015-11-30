@@ -16,10 +16,11 @@ I am not responsible for any loss by using this software.
 ### Deployment
 
 1. Setup Node.js on a Japan server or a server which could login to dmm.com directly.
-2. clone.
-3. `npm install`
-4. `npm start`
-5. Setup NGINX and TLS, proxy pass to `http://127.0.0.1:3000`.
+2. `npm install kancolle-broker`
+3. `npm start` or `NODE_ENV=production npm start` if you are deploying it on Internet.
+4. Setup NGINX and TLS, proxy pass to `http://127.0.0.1:3000`.
+
+Set `PORT` to another port number to change listening port.
 
 ### License
 
