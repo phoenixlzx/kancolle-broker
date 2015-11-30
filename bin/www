@@ -4,6 +4,10 @@ var app = require('../app');
 
 app.set('port', process.env.PORT || 3000);
 
+if (app.get('env') !== 'production') {
+	console.warn('WARN: Application is running in development mode, stack trace will be displayed in browser. Set \'NODE_ENV\' to \'production\' to fix.');
+}
+
 var server = app.listen(app.get('port'), '127.0.0.1', function() {
   debug('Express server listening on port ' + server.address().port);
 });
